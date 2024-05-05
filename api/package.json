@@ -18,5 +18,8 @@
     "concurrently": "^8.2.2",
     "nodemon": "^3.1.0",
     "rimraf": "^5.0.5"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.8"
   }
 }
