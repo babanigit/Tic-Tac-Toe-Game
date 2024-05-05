@@ -28,12 +28,49 @@ app.enable('trust proxy')
 //routes
 
 
-// use the frontend app
-app.use(express.static(path.join(dirname, "/app/dist")));
-console.log(dirname)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(dirname, '/app/dist/index.html'));
+// // use the frontend app
+// app.use(express.static(path.join(dirname, "/app/dist")));
+// console.log(dirname)
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(dirname, '/app/dist/index.html'));
+// });
+
+// get
+app.get("/", (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.status(200).json({
+            message: "server is live"
+        })
+    } catch (error) {
+        next(error)
+    }
 });
 
+// end point middleware
+app.use((req: Request, res: Response, next: NextFunction) => {
+    next(createHttpError(404, "endpoint not found"))
+});
+
+// error handling middleware
+app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
+
+    let errorMessage = "an unknown error occurred(default non-httpError error)";
+    let statusCode = 500;
+
+    if (isHttpError(error)) {
+        statusCode = error.status;
+        errorMessage = error.message;
+    }
+
+    console.error("[console log error] ", error);
+
+    res
+        .status(statusCode)
+        .json({
+            success: false,
+            error: errorMessage,
+            statusCode,
+        })
+})
 
 export default app;
