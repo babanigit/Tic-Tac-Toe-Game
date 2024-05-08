@@ -50,11 +50,11 @@ dotenv_1.default.config({ path: "../.env" });
 // declaration
 const app = (0, express_1.default)();
 const dirname = path_1.default.dirname(path_1.default.resolve());
+// stream Chat
 const api_key = process.env.SC_KEY;
 const api_Secret = process.env.SC_SECRET;
 if (!api_key || !api_Secret) {
     throw (0, http_errors_1.default)(404, "Stream Chat API key or secret is missing");
-    // throw new Error("Stream Chat API key or secret is missing");
 }
 const serverClient = new stream_chat_1.StreamChat(api_key, api_Secret);
 app.use((0, morgan_1.default)("dev"));
@@ -63,17 +63,25 @@ app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)());
 app.enable('trust proxy');
 //routes
-app.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { firstname, lastname, username, password } = req.body;
-    const userId = uuid_1.v4;
-    const hashedPassword = yield bcrypt_1.default.hash(password, 10);
+app.post("/register", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // throw error
+        const { firstname, lastname, username, password } = req.body;
+        const userId = (0, uuid_1.v4)();
+        const hashedPassword = yield bcrypt_1.default.hash(password, 10);
+        const token = serverClient.createToken(userId);
+        res.json({ token, userId, firstname, lastname, username, hashedPassword });
+    }
+    catch (error) {
+        next(error);
+    }
 }));
-// // use the frontend app
-// app.use(express.static(path.join(dirname, "/app/dist")));
-// console.log(dirname)
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(dirname, '/app/dist/index.html'));
-// });
+// use the frontend app
+app.use(express_1.default.static(path_1.default.join(dirname, "/app/dist")));
+console.log(dirname);
+app.get('*', (req, res) => {
+    res.sendFile(path_1.default.join(dirname, '/app/dist/index.html'));
+});
 // get
 app.get("/", (req, res, next) => {
     try {

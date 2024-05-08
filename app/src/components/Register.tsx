@@ -12,6 +12,21 @@ const Register = () => {
     e.preventDefault();
 
     console.log(formData)
+    try {
+      const res = await fetch("http://localhost:5005/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+
+      console.log("data is : ", data)
+
+    } catch (error) {
+      console.error(error)
+    }
 
   };
 
