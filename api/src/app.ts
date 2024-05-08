@@ -55,6 +55,7 @@ app.post("/register", async (req: Request, res: Response, next: NextFunction) =>
         next(error)
     }
 })
+app.post("/login")
 
 
 // use the frontend app

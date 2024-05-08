@@ -76,6 +76,7 @@ app.post("/register", (req, res, next) => __awaiter(void 0, void 0, void 0, func
         next(error);
     }
 }));
+app.post("/login");
 // use the frontend app
 app.use(express_1.default.static(path_1.default.join(dirname, "/app/dist")));
 console.log(dirname);
