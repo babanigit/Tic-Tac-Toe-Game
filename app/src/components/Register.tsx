@@ -1,6 +1,18 @@
 import React, { useState } from "react";
+import Cookies from "universal-cookie";
+
+interface UserData {
+  firstname: string;
+  hashedPassword: string;
+  lastname: string;
+  token: string;
+  userId: string;
+  username: string;
+}
 
 const Register = () => {
+  const cookies = new Cookies();
+
   const [formData, setFormData] = useState({});
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,7 +32,14 @@ const Register = () => {
         },
         body: JSON.stringify(formData),
       });
-      const data = await res.json();
+      const data:UserData = await res.json();
+
+      cookies.set("token", data.token);
+      cookies.set("userId", data.userId);
+      cookies.set("username", data.username);
+      cookies.set("firstName", data.firstname);
+      cookies.set("lastName", data.lastname);
+      cookies.set("hashedPassword", data.hashedPassword);
 
       console.log("data is : ", data)
 
