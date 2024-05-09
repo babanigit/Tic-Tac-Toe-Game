@@ -52,12 +52,20 @@ const App = () => {
       <div>
         {isAuth ? (
           <>
-            <Chat client={client} >
-              <div>
-                <JoinGame />
-              </div>
-              <button onClick={logout}> logout</button>
-            </Chat>
+            <div className=" place-content-center grid place-items-center h-screen gap-4">
+              <Chat client={client}>
+                <div>
+                  <JoinGame />
+                </div>
+                <button
+                  className=" bg-red-300 bg-opacity-45  p-2 px-4 border-2 border-black rounded-md"
+                  onClick={logout}
+                >
+                  {" "}
+                  logout
+                </button>
+              </Chat>
+            </div>
           </>
         ) : (
           <>
