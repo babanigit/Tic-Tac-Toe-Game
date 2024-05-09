@@ -1,6 +1,21 @@
 import React, { useState } from "react";
+import Cookies from "universal-cookie";
 
-const Login = () => {
+interface UserData {
+  firstname: string;
+  hashedPassword: string;
+  lastname: string;
+  token: string;
+  userId: string;
+  username: string;
+}
+
+interface Iprops {
+  setIsAuth: (value:boolean) =>void
+}
+
+const Login = ({setIsAuth}:Iprops) => {
+  const cookies = new Cookies();
   const [formData, setFormData] = useState({});
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -10,8 +25,32 @@ const Login = () => {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-
     console.log(formData);
+
+    try {
+
+      const res = await fetch("http://localhost:5005/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data:UserData = await res.json();
+
+      cookies.set("token", data.token);
+      cookies.set("userId", data.userId);
+      cookies.set("username", data.username);
+      cookies.set("firstName", data.firstname);
+      cookies.set("lastName", data.lastname);
+      cookies.set("hashedPassword", data.hashedPassword);
+      setIsAuth(true)
+      console.log("data is : ", data)
+      
+    } catch (error) {
+      console.error(error)
+    }
+
   };
 
   return (

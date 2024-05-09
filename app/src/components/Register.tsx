@@ -10,9 +10,12 @@ interface UserData {
   username: string;
 }
 
-const Register = () => {
-  const cookies = new Cookies();
+interface Iprops {
+  setIsAuth: (value:boolean) =>void
+}
 
+const Register = ({setIsAuth}:Iprops) => {
+  const cookies = new Cookies();
   const [formData, setFormData] = useState({});
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,8 +25,8 @@ const Register = () => {
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-
     console.log(formData)
+    
     try {
       const res = await fetch("http://localhost:5005/register", {
         method: "POST",
@@ -40,7 +43,7 @@ const Register = () => {
       cookies.set("firstName", data.firstname);
       cookies.set("lastName", data.lastname);
       cookies.set("hashedPassword", data.hashedPassword);
-
+      setIsAuth(true)
       console.log("data is : ", data)
 
     } catch (error) {

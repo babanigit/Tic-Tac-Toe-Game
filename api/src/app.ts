@@ -12,9 +12,12 @@ import path from 'path';
 import { StreamChat } from "stream-chat"
 import { v4 as uuidv4 } from "uuid"
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+// import bcryptjs from "bcryptjs";
 
 import dotenv from "dotenv";
 import { error } from "console";
+import User from "./models/userSchema";
 dotenv.config({ path: "../.env" });
 
 // import files
@@ -39,23 +42,83 @@ app.use(cookieParser());
 app.use(cors());
 app.enable('trust proxy')
 
-//routes
 
+//routes
 app.post("/register", async (req: Request, res: Response, next: NextFunction) => {
 
     try {
         // throw error
         const { firstname, lastname, username, password } = req.body;
+        if (!firstname || !lastname || !username || !password)
+            throw createHttpError(400, "parameters missing");
+
+        // const existingUserEmail = await User.findOne({ username: username });
+        // if (existingUserEmail)
+        //     throw createHttpError(409, "username is already taken!")
+
         const userId = uuidv4();
         const hashedPassword = await bcrypt.hash(password, 10);
+
+        // const user = await User.create({
+        //     username,
+        //     firstname,
+        //     lastname,
+        //     password: hashedPassword,
+        //     // cPasswd: hashedPasswd,
+        // });
+
         const token = serverClient.createToken(userId);
-        res.json({ token, userId, firstname, lastname, username, hashedPassword });
+
+        res
+            .status(200)
+            .json({ token, userId, firstname, lastname, username, hashedPassword });
 
     } catch (error) {
         next(error)
     }
 })
-app.post("/login")
+
+app.post("/login", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { username, password } = req.body;
+
+        if (!username || !password) throw createHttpError(400, "Parameters missing");
+
+        const { users } = await serverClient.queryUsers({ name: username });
+
+        if (users.length === 0)
+            throw createHttpError(404, "User not found");
+
+        const user = users[0];
+
+        console.log("user is ", user)
+
+        const validPassword = await bcrypt.compare(password, user.hashedPassword as string);
+        if (!validPassword) throw createHttpError(401, "Invalid credentials");
+
+        const token = serverClient.createToken(user.id);
+
+        console.log(
+            token,
+            user.firstName,
+            user.lastName,
+            username,
+            user.id
+        )
+
+        res.status(200).json({
+            token,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username,
+            hashedPassword:user.hashedPassword,
+            userId: user.id,
+        });
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 
 // use the frontend app

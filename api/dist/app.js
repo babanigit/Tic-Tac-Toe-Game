@@ -44,6 +44,7 @@ const path_1 = __importDefault(require("path"));
 const stream_chat_1 = require("stream-chat");
 const uuid_1 = require("uuid");
 const bcrypt_1 = __importDefault(require("bcrypt"));
+// import bcryptjs from "bcryptjs";
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config({ path: "../.env" });
 // import files
@@ -67,16 +68,57 @@ app.post("/register", (req, res, next) => __awaiter(void 0, void 0, void 0, func
     try {
         // throw error
         const { firstname, lastname, username, password } = req.body;
+        if (!firstname || !lastname || !username || !password)
+            throw (0, http_errors_1.default)(400, "parameters missing");
+        // const existingUserEmail = await User.findOne({ username: username });
+        // if (existingUserEmail)
+        //     throw createHttpError(409, "username is already taken!")
         const userId = (0, uuid_1.v4)();
         const hashedPassword = yield bcrypt_1.default.hash(password, 10);
+        // const user = await User.create({
+        //     username,
+        //     firstname,
+        //     lastname,
+        //     password: hashedPassword,
+        //     // cPasswd: hashedPasswd,
+        // });
         const token = serverClient.createToken(userId);
-        res.json({ token, userId, firstname, lastname, username, hashedPassword });
+        res
+            .status(200)
+            .json({ token, userId, firstname, lastname, username, hashedPassword });
     }
     catch (error) {
         next(error);
     }
 }));
-app.post("/login");
+app.post("/login", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { username, password } = req.body;
+        if (!username || !password)
+            throw (0, http_errors_1.default)(400, "Parameters missing");
+        const { users } = yield serverClient.queryUsers({ name: username });
+        if (users.length === 0)
+            throw (0, http_errors_1.default)(404, "User not found");
+        const user = users[0];
+        console.log("user is ", user);
+        const validPassword = yield bcrypt_1.default.compare(password, user.hashedPassword);
+        if (!validPassword)
+            throw (0, http_errors_1.default)(401, "Invalid credentials");
+        const token = serverClient.createToken(user.id);
+        console.log(token, user.firstName, user.lastName, username, user.id);
+        res.status(200).json({
+            token,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username,
+            hashedPassword: user.hashedPassword,
+            userId: user.id,
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+}));
 // use the frontend app
 app.use(express_1.default.static(path_1.default.join(dirname, "/app/dist")));
 console.log(dirname);
