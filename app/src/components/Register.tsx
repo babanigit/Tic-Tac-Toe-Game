@@ -67,7 +67,9 @@ const Register = ({setIsAuth}:Iprops) => {
             <h1 className="text-3xl text-center font-semibold ">Register</h1>
           </div>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form
+          //  onSubmit={handleSubmit} 
+           className="flex flex-col gap-4">
             <input
               //   style={{
               //     background: props.theme.body,
@@ -119,6 +121,7 @@ const Register = ({setIsAuth}:Iprops) => {
             <button
               //   style={{ background: props.theme.text, color: props.theme.body }}
               //   disabled={loading}
+              onClick={handleSubmit}
               className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
             >
               Register
