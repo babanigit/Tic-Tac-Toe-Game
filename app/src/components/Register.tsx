@@ -28,7 +28,7 @@ const Register = ({setIsAuth}:Iprops) => {
     console.log(formData)
     
     try {
-      const res = await fetch("http://localhost:5005/register", {
+      const res = await fetch("/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

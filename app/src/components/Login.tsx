@@ -29,7 +29,7 @@ const Login = ({setIsAuth}:Iprops) => {
 
     try {
 
-      const res = await fetch("http://localhost:5005/login", {
+      const res = await fetch("/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
