@@ -1,3 +1,4 @@
+import "./App.css"
 import { useState } from "react";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -52,7 +53,7 @@ const App = () => {
       <div>
         {isAuth ? (
           <>
-            <div className=" place-content-center grid place-items-center h-screen gap-4">
+            <div className=" App ">
               <Chat client={client}>
                 <div>
                   <JoinGame />

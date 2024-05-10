@@ -4,7 +4,7 @@ import Game from "./Game";
 
 const JoinGame = () => {
   const [rivalUsername, setRivalUsername] = useState("");
-  const [channel, setChannel] = useState<unknown>();
+  const [channel, setChannel] = useState<unknown>(null);
   const { client } = useChatContext();
 
   const createChannel = async () => {
@@ -27,15 +27,14 @@ const JoinGame = () => {
   return (
     <div>
       {channel ? (
-       <div>
-        <Channel  >
-        <Game />
-        </Channel>
-
-       </div>
+        <div>
+          <Channel channel={channel}>
+            <Game channel={channel} />
+          </Channel>
+        </div>
       ) : (
         <>
-          <div className=" grid gap-3 w-full place-items-center">
+          <div className=" joinGame">
             <h4>Create Game</h4>
             <input
               className=" p-2 px-4 rounded-md border-2  "
