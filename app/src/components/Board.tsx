@@ -27,8 +27,9 @@ const Board = ({ result, setResult }: IProps) => {
   const { client } = useChatContext();
 
   useEffect(() => {
-    CheckWin()
-  },[board])
+    checkWin();
+    checkIfTie();
+  }, [board]);
 
   const chooseSquare = async (square: number) => {
     if (turn === player && board[square] === "") {
@@ -50,36 +51,9 @@ const Board = ({ result, setResult }: IProps) => {
     }
   };
 
-  // Define an interface for the event
-  interface GameMoveEvent {
-    type: "game-move";
-    user: { id: string }; // Assuming user has an id property
-    data: {
-      square: number;
-      player: string;
-    };
-  }
 
-  channel.on((event) => {
-    if (event.type == "game-move" && event.user!.id != client.userID) {
-      const gameMoveEvent = event as unknown as GameMoveEvent; // Casting the event to GameMoveEvent
 
-      const currentPlayer = gameMoveEvent.data.player === "X" ? "O" : "X";
-      setPlayer(currentPlayer);
-      setTurn(currentPlayer);
-
-      setBoard(
-        board.map((val, idx) => {
-          if (idx === gameMoveEvent.data.square && val === "") {
-            return gameMoveEvent.data.player;
-          }
-          return val;
-        })
-      );
-    }
-  });
-
-  const CheckWin = () => {
+  const checkWin = () => {
     Patterns.forEach((currPattern) => {
       const firstPlayer = board[currPattern[0]];
       if (firstPlayer == "") return;
@@ -92,7 +66,7 @@ const Board = ({ result, setResult }: IProps) => {
       });
 
       if (foundWinningPattern) {
-        alert("Winner", board[currPattern[0]])
+        alert("Winner is " + board[currPattern[0]]);
         setResult({
           winner: board[currPattern[0]],
           state: "Won",
@@ -100,6 +74,50 @@ const Board = ({ result, setResult }: IProps) => {
       }
     });
   };
+
+  const checkIfTie = () => {
+    let filled = true;
+    board.forEach((square) => {
+      if (square == "") {
+        filled = false;
+      }
+    });
+
+    if (filled) {
+      alert("Game Tie");
+      setResult({ winner: "none", state: "tie" });
+    }
+  };
+
+    // Define an interface for the event
+    interface GameMoveEvent {
+      type: "game-move";
+      user: { id: string }; // Assuming user has an id property
+      data: {
+        square: number;
+        player: string;
+      };
+    }
+  
+    channel.on((event) => {
+      if (event.type == "game-move" && event.user!.id != client.userID) {
+        const gameMoveEvent = event as unknown as GameMoveEvent; // Casting the event to GameMoveEvent
+  
+        const currentPlayer = gameMoveEvent.data.player === "X" ? "O" : "X";
+        setPlayer(currentPlayer);
+        setTurn(currentPlayer);
+  
+        setBoard(
+          board.map((val, idx) => {
+            if (idx === gameMoveEvent.data.square && val === "") {
+              return gameMoveEvent.data.player;
+            }
+            return val;
+          })
+        );
+      }
+    });
+
 
   return (
     <div className="board bg-yellow- gap-3 border-2 p-3 rounded-xl ">
