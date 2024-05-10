@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Cookies from "universal-cookie";
 
+// const link = "http://localhost:5005/login"
+const link = "/login"
 interface UserData {
   firstname: string;
   hashedPassword: string;
@@ -29,7 +31,7 @@ const Login = ({setIsAuth}:Iprops) => {
 
     try {
 
-      const res = await fetch("/login", {
+      const res = await fetch(link, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

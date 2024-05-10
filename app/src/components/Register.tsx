@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Cookies from "universal-cookie";
 
+// const link = "http://localhost:5005/register"
+const link = "/register"
 interface UserData {
   firstname: string;
   hashedPassword: string;
@@ -28,7 +30,7 @@ const Register = ({setIsAuth}:Iprops) => {
     console.log(formData)
     
     try {
-      const res = await fetch("/register", {
+      const res = await fetch(link, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

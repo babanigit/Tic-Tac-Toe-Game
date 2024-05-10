@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import Board from "./Board";
+
+import { ResultType } from "./Board";
 
 interface IChannel {
   on(arg0: string, arg1: (event: { watcher_count: number }) => void): unknown;
@@ -24,6 +27,10 @@ const Game = ({ channel }: IProps) => {
 
   // Assuming the type of channel.state.watcher_count is number
   const [playerJoined, setPlayerJoined] = useState<boolean>(watcherCount === 2);
+  const[result,setResult]= useState<ResultType>({
+    winner:"none",
+    state:"none"
+  });
 
   (typedChannel as IChannel).on(
     "user.watching.start",
@@ -36,7 +43,10 @@ const Game = ({ channel }: IProps) => {
 
   return (
     <div className="gameContainer">
-      <Board />
+      <Board
+      result={result}
+      setResult={setResult}
+      />
       {/* chat app */}
       {/* exit game button */}
     </div>

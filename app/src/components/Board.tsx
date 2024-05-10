@@ -1,10 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Square from "./Square";
+import { Patterns } from "./WinningPattern";
 
 import { useChannelStateContext, useChatContext } from "stream-chat-react";
 
-const Board = () => {
+export type ResultType = {
+  winner: string;
+  state: string;
+};
+
+export type SetResultType = React.Dispatch<React.SetStateAction<ResultType>>;
+
+interface IProps {
+  result: ResultType;
+  setResult: SetResultType;
+}
+
+const Board = ({ result, setResult }: IProps) => {
   const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
 
   const [player, setPlayer] = useState("X");
@@ -12,6 +25,10 @@ const Board = () => {
 
   const { channel } = useChannelStateContext();
   const { client } = useChatContext();
+
+  useEffect(() => {
+    CheckWin()
+  },[board])
 
   const chooseSquare = async (square: number) => {
     if (turn === player && board[square] === "") {
@@ -47,6 +64,10 @@ const Board = () => {
     if (event.type == "game-move" && event.user!.id != client.userID) {
       const gameMoveEvent = event as unknown as GameMoveEvent; // Casting the event to GameMoveEvent
 
+      const currentPlayer = gameMoveEvent.data.player === "X" ? "O" : "X";
+      setPlayer(currentPlayer);
+      setTurn(currentPlayer);
+
       setBoard(
         board.map((val, idx) => {
           if (idx === gameMoveEvent.data.square && val === "") {
@@ -57,6 +78,28 @@ const Board = () => {
       );
     }
   });
+
+  const CheckWin = () => {
+    Patterns.forEach((currPattern) => {
+      const firstPlayer = board[currPattern[0]];
+      if (firstPlayer == "") return;
+
+      let foundWinningPattern = true;
+      currPattern.forEach((idx) => {
+        if (board[idx] != firstPlayer) {
+          foundWinningPattern = false;
+        }
+      });
+
+      if (foundWinningPattern) {
+        alert("Winner", board[currPattern[0]])
+        setResult({
+          winner: board[currPattern[0]],
+          state: "Won",
+        });
+      }
+    });
+  };
 
   return (
     <div className="board bg-yellow- gap-3 border-2 p-3 rounded-xl ">
