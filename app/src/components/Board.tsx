@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import Square from "./Square";
 
@@ -33,17 +34,17 @@ const Board = () => {
   };
 
   // Define an interface for the event
-interface GameMoveEvent {
-  type: "game-move";
-  user: { id: string }; // Assuming user has an id property
-  data: {
-    square: number;
-    player: string;
-  };
-}
+  interface GameMoveEvent {
+    type: "game-move";
+    user: { id: string }; // Assuming user has an id property
+    data: {
+      square: number;
+      player: string;
+    };
+  }
 
-  channel.on((event )=> {
-    if(event.type =="game-move" && event.user!.id != client.userID) {
+  channel.on((event) => {
+    if (event.type == "game-move" && event.user!.id != client.userID) {
       const gameMoveEvent = event as unknown as GameMoveEvent; // Casting the event to GameMoveEvent
 
       setBoard(
@@ -54,9 +55,8 @@ interface GameMoveEvent {
           return val;
         })
       );
-
     }
-  })
+  });
 
   return (
     <div className="board bg-yellow- gap-3 border-2 p-3 rounded-xl ">

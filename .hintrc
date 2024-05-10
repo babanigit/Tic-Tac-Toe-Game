@@ -11,6 +11,7 @@
           "-webkit-tap-highlight-color"
         ]
       }
-    ]
+    ],
+    "typescript-config/strict": "off"
   }
 }

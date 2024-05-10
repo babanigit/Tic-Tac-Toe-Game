@@ -4,7 +4,7 @@ import Game from "./Game";
 
 const JoinGame = () => {
   const [rivalUsername, setRivalUsername] = useState("");
-  const [channel, setChannel] = useState<unknown>(null);
+  const [channel, setChannel] = useState(null);
   const { client } = useChatContext();
 
   const createChannel = async () => {
@@ -15,7 +15,8 @@ const JoinGame = () => {
       return;
     }
 
-    const newChannel = client.channel("messaging", undefined, {
+  
+    const newChannel  = client.channel("messaging", undefined, {
       members: [client.userID!, response.users[0].id!],
     });
 
