@@ -35,7 +35,7 @@ const JoinGame = () => {
         </div>
       ) : (
         <>
-          <div className=" joinGame h-screen flex place-content-center place-items-center ">
+          <div className=" h-screen grid place-content-center gap-4 place-items-center ">
             <h4>Create Game</h4>
             <input
               className=" p-2 px-4 rounded-md border-2  "

@@ -44,13 +44,19 @@ const Game = ({ channel, setChannel }: IProps) => {
     }
   );
 
-  if (!playerJoined) return <div>waiting for the player to join</div>;
+  if (!playerJoined) return <div className=" h-screen place-content-center grid place-items-center">Waiting for the Player to Join</div>;
 
   return (
-    <div className="gameContainer ">
+    <div className=" grid w-screen grid-flow-row md:grid-flow-col place-content-center place-items-center gap-3 h-screen ">
+
+      <div className="">
+
       <Board result={result} setResult={setResult} />
+      </div>
       {/* chat app */}
-      <Window>
+      <div className=" " >
+
+      <Window >
         <MessageList
           disableDateSeparator
           closeReactionSelectorOnClick
@@ -59,6 +65,8 @@ const Game = ({ channel, setChannel }: IProps) => {
         />
         <MessageInput noFiles />
       </Window>
+      </div>
+     
 
       {/* exit game button */}
       <button
