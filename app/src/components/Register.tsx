@@ -4,6 +4,7 @@ import Cookies from "universal-cookie";
 // const link = "http://localhost:5005/register";
 const link = "/register"
 interface UserData {
+  error: string;
   firstname: string;
   hashedPassword: string;
   lastname: string;
@@ -19,6 +20,8 @@ interface Iprops {
 const Register = ({ setIsAuth }: Iprops) => {
   const cookies = new Cookies();
   const [formData, setFormData] = useState({});
+
+  const [errorData,setErrorData]= useState<UserData>();
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -39,14 +42,24 @@ const Register = ({ setIsAuth }: Iprops) => {
       });
       const data: UserData = await res.json();
 
-      cookies.set("token", data.token);
-      cookies.set("userId", data.userId);
-      cookies.set("username", data.username);
-      cookies.set("firstName", data.firstname);
-      cookies.set("lastName", data.lastname);
-      cookies.set("hashedPassword", data.hashedPassword);
-      setIsAuth(true);
-      console.log("data is : ", data);
+      if(data.error){
+        setErrorData(data)
+      }else{
+
+        console.log("hello  ", errorData)
+
+        cookies.set("token", data.token);
+        cookies.set("userId", data.userId);
+        cookies.set("username", data.username);
+        cookies.set("firstName", data.firstname);
+        cookies.set("lastName", data.lastname);
+        cookies.set("hashedPassword", data.hashedPassword);
+        setIsAuth(true);
+        console.log("data is : ", data);
+
+      }
+
+     
     } catch (error) {
       console.error(error);
     }
@@ -56,7 +69,7 @@ const Register = ({ setIsAuth }: Iprops) => {
     <>
       <div
         // style={{ background: props.theme.body, color: props.theme.text }}
-        className=" bg-pink-300 bg-opacity-50 max-w-full rounded-2xl m-auto md:h-screen grid place-content-center "
+        className=" border-2 md:max-h-[500px] border-black bg-opacity-50 max-w-full rounded-2xl m-auto md:h-screen grid place-content-center "
       >
         <div className="  max-w-lg mx-auto  grid gap-3 p-5 ">
         
@@ -124,11 +137,11 @@ const Register = ({ setIsAuth }: Iprops) => {
             {/* <OAuth /> */}
           </form>
           
-          {/* <p className="text-red-500 mt-5">
-            {error
-              ? errorData.error || "Something went wrong(from singUp.jsx)!"
+          <p className="text-red-500 mt-5">
+            {errorData
+              ? errorData.error
               : ""}
-          </p> */}
+          </p>
         </div>
       </div>
     </>

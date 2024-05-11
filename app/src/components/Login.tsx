@@ -59,7 +59,7 @@ const Login = ({setIsAuth}:Iprops) => {
     <>
       <div
         // style={{ background: props.theme.body, color: props.theme.text }}
-        className="bg-blue-300 max-w-full bg-opacity-50 rounded-2xl m-auto md:h-screen grid place-content-center "
+        className=" max-w-full bg-opacity-50 rounded-2xl m-auto md:h-screen grid place-content-center "
       >
         <div className="  max-w-lg mx-auto   grid gap-3 p-5 ">
           

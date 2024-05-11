@@ -44,18 +44,16 @@ const Game = ({ channel, setChannel }: IProps) => {
     }
   );
 
-  if (!playerJoined) return <div className=" h-screen place-content-center grid place-items-center">Waiting for the Player to Join</div>;
+  if (!playerJoined) return <div className="  h-screen place-content-center grid place-items-center">Waiting for the Player to Join</div>;
 
   return (
-    <div className=" grid w-screen grid-flow-row md:grid-flow-col place-content-center place-items-center gap-3 h-screen ">
+    <div className=" w-screen  h-screen  grid  grid-flow-row md:grid-flow-col place-content-center place-items-center gap-3">
 
       <div className="">
-
       <Board result={result} setResult={setResult} />
       </div>
       {/* chat app */}
       <div className=" " >
-
       <Window >
         <MessageList
           disableDateSeparator

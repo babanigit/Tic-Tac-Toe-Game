@@ -28,14 +28,14 @@ const JoinGame = () => {
   return (
     <div>
       {channel ? (
-        <div className=" h-screen">
+        <div className="  h-screen">
           <Channel channel={channel} Input={CustomInput}>
             <Game channel={channel} setChannel={setChannel} />
           </Channel>
         </div>
       ) : (
         <>
-          <div className=" h-screen grid place-content-center gap-4 place-items-center ">
+          <div className=" bg-purple-300 bg-opacity-50 h-screen grid place-content-center gap-4 place-items-center ">
             <h4>Create Game</h4>
             <input
               className=" p-2 px-4 rounded-md border-2  "
@@ -47,7 +47,7 @@ const JoinGame = () => {
               }}
             />
             <button
-              className=" bg-green-300 bg-opacity-45 p-2 px-4 border-2 border-black rounded-md"
+              className="  p-2 px-4 border-2 border-black rounded-md"
               onClick={createChannel}
             >
               Start game

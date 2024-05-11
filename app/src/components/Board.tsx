@@ -120,7 +120,7 @@ const Board = ({ result, setResult }: IProps) => {
 
 
   return (
-    <div className="board max-w-[300px] max-h-[300px] md:max-w-full md:max-h-full bg-yellow- gap-3 border-2 p-3 rounded-xl ">
+    <div className="board max-w-[250px] max-h-[250px] md:max-w-full md:max-h-full bg-yellow- gap-3 border-2 p-3 rounded-xl ">
       {/* columns */}
       <div className=" row  gap-1 bg-red-  ">
         {/* rows */}
