@@ -59,17 +59,10 @@ const Login = ({setIsAuth}:Iprops) => {
     <>
       <div
         // style={{ background: props.theme.body, color: props.theme.text }}
-        className=" max-w-lg m-auto h-screen grid place-content-center "
+        className="bg-blue-300 max-w-full bg-opacity-50 rounded-2xl m-auto md:h-screen grid place-content-center "
       >
-        <div className="  max-w-lg mx-auto   w-screen grid gap-3 p-5 ">
-          <div className=" flex place-content-center place-items-center">
-            {/* <div>
-              <img className=" w-12" src={man} alt="women" />
-            </div> */}
-
-            <h1 className="text-3xl text-center font-semibold ">Login</h1>
-          </div>
-
+        <div className="  max-w-lg mx-auto   grid gap-3 p-5 ">
+          
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <input
               //   style={{
@@ -104,15 +97,7 @@ const Login = ({setIsAuth}:Iprops) => {
             </button>
             {/* <OAuth /> */}
           </form>
-          <div className="flex gap-2 mt-5">
-            <p>don't have an account ?</p>
-            {/* <Link to="/signin">
-              <span className="text-blue-500">Sign in</span>
-            </Link> */}
-            {/* <Link to="/admin">
-              <span className="text-red-500">Admin</span>
-            </Link> */}
-          </div>
+        
           {/* <p className="text-red-500 mt-5">
             {error
               ? errorData.error || "Something went wrong(from singUp.jsx)!"

@@ -69,7 +69,7 @@ const Board = ({ result, setResult }: IProps) => {
         alert("Winner is " + board[currPattern[0]]);
         setResult({
           winner: board[currPattern[0]],
-          state: "Won",
+          state: "won",
         });
       }
     });

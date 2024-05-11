@@ -8,10 +8,17 @@
       {
         "ignore": [
           "-webkit-text-size-adjust",
-          "-webkit-tap-highlight-color"
+          "-webkit-tap-highlight-color",
+          "width: fit-content"
         ]
       }
     ],
-    "typescript-config/strict": "off"
+    "typescript-config/strict": "off",
+    "axe/name-role-value": [
+      "default",
+      {
+        "button-name": "off"
+      }
+    ]
   }
 }

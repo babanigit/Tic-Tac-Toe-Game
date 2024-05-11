@@ -1,4 +1,4 @@
-import "./App.css"
+import "./App.css";
 import { useState } from "react";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -53,13 +53,14 @@ const App = () => {
       <div>
         {isAuth ? (
           <>
-            <div className=" App ">
+            <div className=" bg-red-300 grid  ">
               <Chat client={client}>
                 <div>
                   <JoinGame />
                 </div>
+
                 <button
-                  className=" bg-red-300 bg-opacity-45  p-2 px-4 border-2 border-black rounded-md"
+                  className=" bg-red-300 bg-opacity-45  p-2 px-4 border-2 border-black rounded-md fixed right-0 bottom-0 m-4 "
                   onClick={logout}
                 >
                   {" "}
@@ -69,10 +70,17 @@ const App = () => {
             </div>
           </>
         ) : (
-          <>
-            <Register setIsAuth={setIsAuth} />
-            <Login setIsAuth={setIsAuth} />
-          </>
+          <div className="h-screen place-content-center place-items-center w-screen grid grid-flow-row md:grid-flow-col md:grid-cols-3">
+            <div>
+              <Register setIsAuth={setIsAuth} />
+            </div>
+
+            <div className=" w-2 h-2" />
+
+            <div>
+              <Login setIsAuth={setIsAuth} />
+            </div>
+          </div>
         )}
       </div>
     </>

@@ -1,10 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from "react";
-import Board from "./Board";
+import "./Chat.css";
 
+import { useState } from "react";
+import { Window, MessageList, MessageInput } from "stream-chat-react";
+
+import Board from "./Board";
 import { ResultType } from "./Board";
 
 interface IChannel {
+  stopWatching(): unknown;
   on(arg0: string, arg1: (event: { watcher_count: number }) => void): unknown;
   state: {
     watcher_count: number | unknown; // Assuming this is the type of watcher_count
@@ -13,9 +17,10 @@ interface IChannel {
 
 interface IProps {
   channel: IChannel | unknown;
+  setChannel: (value: null) => void;
 }
 
-const Game = ({ channel }: IProps) => {
+const Game = ({ channel, setChannel }: IProps) => {
   // Type assertion to ensure channel is of type IChannel
   const typedChannel = channel as IChannel;
 
@@ -27,9 +32,9 @@ const Game = ({ channel }: IProps) => {
 
   // Assuming the type of channel.state.watcher_count is number
   const [playerJoined, setPlayerJoined] = useState<boolean>(watcherCount === 2);
-  const[result,setResult]= useState<ResultType>({
-    winner:"none",
-    state:"none"
+  const [result, setResult] = useState<ResultType>({
+    winner: "none",
+    state: "none",
   });
 
   (typedChannel as IChannel).on(
@@ -42,13 +47,35 @@ const Game = ({ channel }: IProps) => {
   if (!playerJoined) return <div>waiting for the player to join</div>;
 
   return (
-    <div className="gameContainer">
-      <Board
-      result={result}
-      setResult={setResult}
-      />
+    <div className="gameContainer ">
+      <Board result={result} setResult={setResult} />
       {/* chat app */}
+      <Window>
+        <MessageList
+          disableDateSeparator
+          closeReactionSelectorOnClick
+          hideDeletedMessages
+          messageActions={["react"]}
+        />
+        <MessageInput noFiles />
+      </Window>
+
       {/* exit game button */}
+      <button
+        className=" fixed bottom-0 left-0 m-4 border-2 p-3 rounded-md border-black"
+        onClick={async () => {
+          await (typedChannel as IChannel).stopWatching();
+          setChannel(null);
+        }}
+      >
+        {" "}
+        Leave Game{" "}
+      </button>
+
+      <div className=" fixed bottom-0 m-5 bg-blue-300 p-3 rounded-md" >
+        {result.state === "won" && <div> {result.winner} Won The Game</div>}
+        {result.state === "tie" && <div> Game Tieds</div>}
+      </div>
     </div>
   );
 };

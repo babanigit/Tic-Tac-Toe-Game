@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Cookies from "universal-cookie";
 
-// const link = "http://localhost:5005/register"
+// const link = "http://localhost:5005/register";
 const link = "/register"
 interface UserData {
   firstname: string;
@@ -13,10 +13,10 @@ interface UserData {
 }
 
 interface Iprops {
-  setIsAuth: (value:boolean) =>void
+  setIsAuth: (value: boolean) => void;
 }
 
-const Register = ({setIsAuth}:Iprops) => {
+const Register = ({ setIsAuth }: Iprops) => {
   const cookies = new Cookies();
   const [formData, setFormData] = useState({});
 
@@ -25,10 +25,10 @@ const Register = ({setIsAuth}:Iprops) => {
     console.log(formData);
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    console.log(formData)
-    
+    console.log(formData);
+
     try {
       const res = await fetch(link, {
         method: "POST",
@@ -37,7 +37,7 @@ const Register = ({setIsAuth}:Iprops) => {
         },
         body: JSON.stringify(formData),
       });
-      const data:UserData = await res.json();
+      const data: UserData = await res.json();
 
       cookies.set("token", data.token);
       cookies.set("userId", data.userId);
@@ -45,33 +45,26 @@ const Register = ({setIsAuth}:Iprops) => {
       cookies.set("firstName", data.firstname);
       cookies.set("lastName", data.lastname);
       cookies.set("hashedPassword", data.hashedPassword);
-      setIsAuth(true)
-      console.log("data is : ", data)
-
+      setIsAuth(true);
+      console.log("data is : ", data);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-
   };
 
   return (
     <>
       <div
         // style={{ background: props.theme.body, color: props.theme.text }}
-        className=" max-w-lg m-auto h-screen grid place-content-center "
+        className=" bg-pink-300 bg-opacity-50 max-w-full rounded-2xl m-auto md:h-screen grid place-content-center "
       >
-        <div className="  max-w-lg mx-auto   w-screen grid gap-3 p-5 ">
-          <div className=" flex place-content-center place-items-center">
-            {/* <div>
-              <img className=" w-12" src={man} alt="women" />
-            </div> */}
-
-            <h1 className="text-3xl text-center font-semibold ">Register</h1>
-          </div>
+        <div className="  max-w-lg mx-auto  grid gap-3 p-5 ">
+        
 
           <form
-          //  onSubmit={handleSubmit} 
-           className="flex flex-col gap-4">
+            //  onSubmit={handleSubmit}
+            className="flex flex-col gap-4"
+          >
             <input
               //   style={{
               //     background: props.theme.body,
@@ -81,7 +74,7 @@ const Register = ({setIsAuth}:Iprops) => {
               type="text"
               placeholder="FirstName"
               id="firstname"
-              className="bg-slate-100 p-3 rounded-lg border-2"
+              className="bg-slate-100 p-3 rounded-lg border-2 w-full"
               onChange={handleChange}
             />
             <input
@@ -130,15 +123,7 @@ const Register = ({setIsAuth}:Iprops) => {
             </button>
             {/* <OAuth /> */}
           </form>
-          <div className="flex gap-2 mt-5">
-            <p>Have an account?</p>
-            {/* <Link to="/signin">
-              <span className="text-blue-500">Sign in</span>
-            </Link> */}
-            {/* <Link to="/admin">
-              <span className="text-red-500">Admin</span>
-            </Link> */}
-          </div>
+          
           {/* <p className="text-red-500 mt-5">
             {error
               ? errorData.error || "Something went wrong(from singUp.jsx)!"
