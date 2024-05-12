@@ -21,6 +21,7 @@
     "react-script": "^2.0.5",
     "stream-chat": "^8.31.0",
     "stream-chat-react": "^11.17.0",
+    "styled-components": "^6.1.11",
     "universal-cookie": "^7.1.4"
   },
   "devDependencies": {

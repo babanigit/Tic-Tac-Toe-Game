@@ -5,7 +5,7 @@ interface Iprops {
 
 const Square = ({ chooseSquare,val }: Iprops) => {
   return <div
-  className=" square "
+  className=" square rounded-lg "
   onClick={chooseSquare}>{val}</div>;
 };
 

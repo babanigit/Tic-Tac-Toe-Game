@@ -44,31 +44,39 @@ const Game = ({ channel, setChannel }: IProps) => {
     }
   );
 
-  if (!playerJoined) return <div className="  h-screen place-content-center grid place-items-center">Waiting for the Player to Join</div>;
+  if (!playerJoined)
+    return (
+      <div className="  h-screen place-content-center grid place-items-center">
+        Waiting for the Player to Join
+      </div>
+    );
 
   return (
     <div className=" w-screen  h-screen  grid  grid-flow-row md:grid-flow-col place-content-center place-items-center gap-3">
-
       <div className="">
-      <Board result={result} setResult={setResult} />
+        <Board result={result} setResult={setResult} />
       </div>
       {/* chat app */}
-      <div className=" " >
-      <Window >
-        <MessageList
-          disableDateSeparator
-          closeReactionSelectorOnClick
-          hideDeletedMessages
-          messageActions={["react"]}
-        />
-        <MessageInput noFiles />
-      </Window>
+      <div className=" ">
+        <Window>
+          <div className=" p-3 ">
+            <MessageList
+              disableDateSeparator
+              closeReactionSelectorOnClick
+              hideDeletedMessages
+              messageActions={["react"]}
+            />
+          </div>
+
+          <div className=" flex place-content-center place-items-center">
+            <MessageInput noFiles />
+          </div>
+        </Window>
       </div>
-     
 
       {/* exit game button */}
       <button
-        className=" fixed bottom-0 left-0 m-4 border-2 p-3 rounded-md border-black"
+        className=" fixed  bottom-0 left-0 m-4 border-2 p-3 rounded-md border-black"
         onClick={async () => {
           await (typedChannel as IChannel).stopWatching();
           setChannel(null);
@@ -78,10 +86,10 @@ const Game = ({ channel, setChannel }: IProps) => {
         Leave Game{" "}
       </button>
 
-      <div className=" fixed bottom-0 m-5 bg-blue-300 p-3 rounded-md" >
+      {/* <div className=" fixed bottom-0 m-5 bg-blue-300 p-3 rounded-md" >
         {result.state === "won" && <div> {result.winner} Won The Game</div>}
-        {result.state === "tie" && <div> Game Tieds</div>}
-      </div>
+        {result.state === "tie" && <div> Game Tied</div>}
+      </div> */}
     </div>
   );
 };
