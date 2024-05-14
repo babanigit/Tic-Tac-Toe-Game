@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Cookies from "universal-cookie";
 
 // const link = "http://localhost:5005/login"
-const link = "/login"
+const link = "/login";
 interface UserData {
   firstname: string;
   hashedPassword: string;
@@ -13,10 +13,10 @@ interface UserData {
 }
 
 interface Iprops {
-  setIsAuth: (value:boolean) =>void
+  setIsAuth: (value: boolean) => void;
 }
 
-const Login = ({setIsAuth}:Iprops) => {
+const Login = ({ setIsAuth }: Iprops) => {
   const cookies = new Cookies();
   const [formData, setFormData] = useState({});
 
@@ -30,7 +30,6 @@ const Login = ({setIsAuth}:Iprops) => {
     console.log(formData);
 
     try {
-
       const res = await fetch(link, {
         method: "POST",
         headers: {
@@ -38,7 +37,7 @@ const Login = ({setIsAuth}:Iprops) => {
         },
         body: JSON.stringify(formData),
       });
-      const data:UserData = await res.json();
+      const data: UserData = await res.json();
 
       cookies.set("token", data.token);
       cookies.set("userId", data.userId);
@@ -46,13 +45,11 @@ const Login = ({setIsAuth}:Iprops) => {
       cookies.set("firstName", data.firstname);
       cookies.set("lastName", data.lastname);
       cookies.set("hashedPassword", data.hashedPassword);
-      setIsAuth(true)
-      console.log("data is : ", data)
-      
+      setIsAuth(true);
+      console.log("data is : ", data);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-
   };
 
   return (
@@ -62,7 +59,6 @@ const Login = ({setIsAuth}:Iprops) => {
         className=" max-w-full bg-opacity-50 rounded-2xl m-auto md:h-screen grid place-content-center "
       >
         <div className="  max-w-lg mx-auto   grid gap-3 p-5 ">
-          
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <input
               //   style={{
@@ -97,7 +93,7 @@ const Login = ({setIsAuth}:Iprops) => {
             </button>
             {/* <OAuth /> */}
           </form>
-        
+
           {/* <p className="text-red-500 mt-5">
             {error
               ? errorData.error || "Something went wrong(from singUp.jsx)!"

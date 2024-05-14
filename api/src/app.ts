@@ -48,8 +48,8 @@ app.post("/register", async (req: Request, res: Response, next: NextFunction) =>
 
     try {
         // throw error
-        const { firstname, lastname, username, password } = req.body;
-        if (!firstname || !lastname || !username || !password)
+        const {  username, password } = req.body;
+        if ( !username || !password)
             throw createHttpError(400, "parameters missing");
 
         // const existingUserEmail = await User.findOne({ username: username });
@@ -71,7 +71,7 @@ app.post("/register", async (req: Request, res: Response, next: NextFunction) =>
 
         res
             .status(200)
-            .json({ token, userId, firstname, lastname, username, hashedPassword });
+            .json({ token, userId, username, hashedPassword });
 
     } catch (error) {
         next(error)

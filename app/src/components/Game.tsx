@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import "./Chat.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Window, MessageList, MessageInput } from "stream-chat-react";
 
 import Board from "./Board";
 import { ResultType } from "./Board";
 
-interface IChannel {
+export interface IChannel {
   stopWatching(): unknown;
   on(arg0: string, arg1: (event: { watcher_count: number }) => void): unknown;
   state: {
@@ -16,11 +16,27 @@ interface IChannel {
 }
 
 interface IProps {
-  channel: IChannel | unknown;
+  channel: IChannel | null;
   setChannel: (value: null) => void;
+  call: boolean;
+  setCall: (value: boolean) => void;
 }
 
-const Game = ({ channel, setChannel }: IProps) => {
+const Game = ({ channel, setChannel, call, setCall }: IProps) => {
+  useEffect(() => {
+    async function hello() {
+      await (typedChannel as IChannel).stopWatching();
+      setChannel(null);
+      setCall(!call);
+    }
+
+    if (call) {
+      hello();
+    }
+
+    // leaveFunction();
+  }, [call]);
+
   // Type assertion to ensure channel is of type IChannel
   const typedChannel = channel as IChannel;
 
@@ -51,6 +67,11 @@ const Game = ({ channel, setChannel }: IProps) => {
       </div>
     );
 
+  const leaveFunction = async () => {
+    await (typedChannel as IChannel).stopWatching();
+    setChannel(null);
+  };
+
   return (
     <div className=" w-screen  h-screen  grid  grid-flow-row md:grid-flow-col place-content-center place-items-center gap-3">
       <div className="">
@@ -76,11 +97,8 @@ const Game = ({ channel, setChannel }: IProps) => {
 
       {/* exit game button */}
       <button
-        className=" fixed  bottom-0 left-0 m-4 border-2 p-3 rounded-md border-black"
-        onClick={async () => {
-          await (typedChannel as IChannel).stopWatching();
-          setChannel(null);
-        }}
+        className=" fixed bottom-0 left-0 m-4 border-2 p-3 rounded-md border-black"
+        onClick={leaveFunction}
       >
         {" "}
         Leave Game{" "}

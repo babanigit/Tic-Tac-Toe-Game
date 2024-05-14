@@ -67,8 +67,8 @@ app.enable('trust proxy');
 app.post("/register", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // throw error
-        const { firstname, lastname, username, password } = req.body;
-        if (!firstname || !lastname || !username || !password)
+        const { username, password } = req.body;
+        if (!username || !password)
             throw (0, http_errors_1.default)(400, "parameters missing");
         // const existingUserEmail = await User.findOne({ username: username });
         // if (existingUserEmail)
@@ -85,7 +85,7 @@ app.post("/register", (req, res, next) => __awaiter(void 0, void 0, void 0, func
         const token = serverClient.createToken(userId);
         res
             .status(200)
-            .json({ token, userId, firstname, lastname, username, hashedPassword });
+            .json({ token, userId, username, hashedPassword });
     }
     catch (error) {
         next(error);

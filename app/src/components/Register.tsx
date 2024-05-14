@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import Cookies from "universal-cookie";
+import { ThemeDataType } from "../assets/theme";
 
 // const link = "http://localhost:5005/register";
-const link = "/register"
+const link = "/register";
 interface UserData {
   error: string;
-  firstname: string;
+  // firstname: string;
   hashedPassword: string;
-  lastname: string;
+  // lastname: string;
   token: string;
   userId: string;
   username: string;
@@ -15,13 +16,14 @@ interface UserData {
 
 interface Iprops {
   setIsAuth: (value: boolean) => void;
+  theme: ThemeDataType;
 }
 
-const Register = ({ setIsAuth }: Iprops) => {
+const Register = ({ setIsAuth, theme }: Iprops) => {
   const cookies = new Cookies();
   const [formData, setFormData] = useState({});
 
-  const [errorData,setErrorData]= useState<UserData>();
+  const [errorData, setErrorData] = useState<UserData>();
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -42,24 +44,20 @@ const Register = ({ setIsAuth }: Iprops) => {
       });
       const data: UserData = await res.json();
 
-      if(data.error){
-        setErrorData(data)
-      }else{
-
-        console.log("hello  ", errorData)
+      if (data.error) {
+        setErrorData(data);
+      } else {
+        console.log("hello  ", errorData);
 
         cookies.set("token", data.token);
         cookies.set("userId", data.userId);
         cookies.set("username", data.username);
-        cookies.set("firstName", data.firstname);
-        cookies.set("lastName", data.lastname);
+        // cookies.set("firstName", data.firstname);
+        // cookies.set("lastName", data.lastname);
         cookies.set("hashedPassword", data.hashedPassword);
         setIsAuth(true);
         console.log("data is : ", data);
-
       }
-
-     
     } catch (error) {
       console.error(error);
     }
@@ -68,17 +66,16 @@ const Register = ({ setIsAuth }: Iprops) => {
   return (
     <>
       <div
-        // style={{ background: props.theme.body, color: props.theme.text }}
+        style={{ borderColor: theme.text }}
         className=" border-2 md:max-h-[500px] border-black bg-opacity-50 max-w-full rounded-2xl m-auto md:h-screen grid place-content-center "
       >
         <div className="  max-w-lg mx-auto  grid gap-3 p-5 ">
-        
-
           <form
             //  onSubmit={handleSubmit}
+
             className="flex flex-col gap-4"
           >
-            <input
+            {/* <input
               //   style={{
               //     background: props.theme.body,
               //     color: props.theme.text,
@@ -101,13 +98,13 @@ const Register = ({ setIsAuth }: Iprops) => {
               id="lastname"
               className="bg-slate-100 p-3 rounded-lg border-2"
               onChange={handleChange}
-            />
+            /> */}
             <input
-              //   style={{
-              //     background: props.theme.body,
-              //     color: props.theme.text,
-              //     borderColor: props.theme.text,
-              //   }}
+              style={{
+                background: theme.body,
+                color: theme.text,
+                borderColor: theme.text,
+              }}
               type="text"
               placeholder="Username"
               id="username"
@@ -115,11 +112,11 @@ const Register = ({ setIsAuth }: Iprops) => {
               onChange={handleChange}
             />
             <input
-              //   style={{
-              //     background: props.theme.body,
-              //     color: props.theme.text,
-              //     borderColor: props.theme.text,
-              //   }}
+              style={{
+                background: theme.body,
+                color: theme.text,
+                borderColor: theme.text,
+              }}
               type="password"
               placeholder="Password"
               id="password"
@@ -136,11 +133,9 @@ const Register = ({ setIsAuth }: Iprops) => {
             </button>
             {/* <OAuth /> */}
           </form>
-          
+
           <p className="text-red-500 mt-5">
-            {errorData
-              ? errorData.error
-              : ""}
+            {errorData ? errorData.error : ""}
           </p>
         </div>
       </div>
