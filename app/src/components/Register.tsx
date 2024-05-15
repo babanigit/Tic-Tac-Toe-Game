@@ -67,9 +67,9 @@ const Register = ({ setIsAuth, theme }: Iprops) => {
     <>
       <div
         style={{ borderColor: theme.text }}
-        className=" border-2 md:max-h-[500px] border-black bg-opacity-50 max-w-full rounded-2xl m-auto md:h-screen grid place-content-center "
+        className=" border-2 md:max-h-[500px] border-black bg-opacity-50 w-full rounded-2xl m-auto md:h-screen grid place-content-center "
       >
-        <div className="  max-w-lg mx-auto  grid gap-3 p-5 ">
+        <div className="  mx-auto  grid gap-3 p-5 ">
           <form
             //  onSubmit={handleSubmit}
 

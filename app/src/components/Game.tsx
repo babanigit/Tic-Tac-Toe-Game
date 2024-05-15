@@ -76,7 +76,7 @@ const Game = ({ channel, setChannel, call, setCall,theme }: IProps) => {
   };
 
   return (
-    <div className=" w-screen  h-screen  grid  grid-flow-row md:grid-flow-col place-content-center place-items-center gap-3">
+    <div className=" w-full  h-screen  grid  grid-flow-row md:grid-flow-col place-content-center place-items-center gap-3">
       <div
       style={{backgroundColor:theme.body, color:theme.text}}
       className=" text-black">
