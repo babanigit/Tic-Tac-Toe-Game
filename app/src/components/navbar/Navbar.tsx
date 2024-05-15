@@ -1,4 +1,5 @@
 // Navbar.tsx
+import "./Header.css"
 
 import { useState, useContext } from "react";
 import { SetThemeContext } from "../../App";
@@ -46,7 +47,7 @@ const Navbar = ({ theme, logout, isAuth, channel, setCall,call }: Iprops) => {
     >
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center">
-          <div className="flex-shrink-0 ">Tic-Tac-Toe Game</div>
+          <div className="flex-shrink-0 font-extrabold ">Tic-Tac-Toe Game</div>
           <div className="hidden gap-3 md:flex">
             {/* <a
               href="#"
@@ -101,16 +102,49 @@ const Navbar = ({ theme, logout, isAuth, channel, setCall,call }: Iprops) => {
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
-              className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex gap-2"
             >
-              Menu
+              {isMenuOpen ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16m-7 6h7"
+                  />
+                </svg>
+              )}
+
+              {/*  */}
+
             </button>
           </div>
         </div>
         {/* Submenu */}
         {isMenuOpen && (
           <div className="md:hidden">
-            <div className="mt-2 flex place-content-center gap-3">
+            <div className=" menu  mt-2 flex place-content-center gap-3">
               {/* <a
                 href="#"
                 className="block  hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
