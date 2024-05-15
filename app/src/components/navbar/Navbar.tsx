@@ -47,7 +47,7 @@ const Navbar = ({ theme, logout, isAuth, channel, setCall,call }: Iprops) => {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center">
           <div className="flex-shrink-0 ">Tic-Tac-Toe Game</div>
-          <div className="hidden md:block">
+          <div className="hidden gap-3 md:flex">
             {/* <a
               href="#"
               className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"

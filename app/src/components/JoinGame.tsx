@@ -48,6 +48,7 @@ const JoinGame = ({ channel, setChannel, theme, call, setCall }: IProps) => {
               setChannel={setChannel}
               call={call}
               setCall={setCall}
+              theme={theme}
             />
           </Channel>
         </div>

@@ -12,6 +12,7 @@ import { Chat } from "stream-chat-react";
 import JoinGame from "./components/JoinGame";
 import Navbar from "./components/navbar/Navbar";
 import { ThemeDataType } from "./assets/theme";
+import AppFooter from "./components/footer/AppFooter";
 
 interface IProps {
   theme: ThemeDataType;
@@ -93,6 +94,10 @@ const App2 = ({ theme }: IProps) => {
             </div> */}
         </div>
       )}
+
+      <div>
+        <AppFooter />
+      </div>
     </div>
   );
 };

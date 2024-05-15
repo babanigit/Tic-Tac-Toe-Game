@@ -6,6 +6,7 @@ import { Window, MessageList, MessageInput } from "stream-chat-react";
 
 import Board from "./Board";
 import { ResultType } from "./Board";
+import { ThemeDataType } from "../assets/theme";
 
 export interface IChannel {
   stopWatching(): unknown;
@@ -20,9 +21,11 @@ interface IProps {
   setChannel: (value: null) => void;
   call: boolean;
   setCall: (value: boolean) => void;
+  theme:ThemeDataType;
+
 }
 
-const Game = ({ channel, setChannel, call, setCall }: IProps) => {
+const Game = ({ channel, setChannel, call, setCall,theme }: IProps) => {
   useEffect(() => {
     async function hello() {
       await (typedChannel as IChannel).stopWatching();
@@ -74,11 +77,13 @@ const Game = ({ channel, setChannel, call, setCall }: IProps) => {
 
   return (
     <div className=" w-screen  h-screen  grid  grid-flow-row md:grid-flow-col place-content-center place-items-center gap-3">
-      <div className="">
+      <div
+      style={{backgroundColor:theme.body, color:theme.text}}
+      className=" text-black">
         <Board result={result} setResult={setResult} />
       </div>
       {/* chat app */}
-      <div className=" ">
+      <div className=" text-black">
         <Window>
           <div className=" p-3 ">
             <MessageList
@@ -96,13 +101,7 @@ const Game = ({ channel, setChannel, call, setCall }: IProps) => {
       </div>
 
       {/* exit game button */}
-      <button
-        className=" fixed bottom-0 left-0 m-4 border-2 p-3 rounded-md border-black"
-        onClick={leaveFunction}
-      >
-        {" "}
-        Leave Game{" "}
-      </button>
+    
 
       {/* <div className=" fixed bottom-0 m-5 bg-blue-300 p-3 rounded-md" >
         {result.state === "won" && <div> {result.winner} Won The Game</div>}
