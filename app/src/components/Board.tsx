@@ -69,6 +69,7 @@ const Board = ({ result, setResult }: IProps) => {
           winner: board[currPattern[0]],
           state: "won",
         });
+        setBoard(["", "", "", "", "", "", "", "", ""]);
       }
     });
   };
@@ -84,37 +85,38 @@ const Board = ({ result, setResult }: IProps) => {
     if (filled) {
       alert("Game Tie");
       setResult({ winner: "none", state: "tie" });
+      setBoard(["", "", "", "", "", "", "", "", ""]);
     }
   };
 
-    // Define an interface for the event
-    interface GameMoveEvent {
-      type: "game-move";
-      user: { id: string }; // Assuming user has an id property
-      data: {
-        square: number;
-        player: string;
-      };
+  // Define an interface for the event
+  interface GameMoveEvent {
+    type: "game-move";
+    user: { id: string }; // Assuming user has an id property
+    data: {
+      square: number;
+      player: string;
+    };
+  }
+
+  channel.on((event) => {
+    if (event.type == "game-move" && event.user!.id != client.userID) {
+      const gameMoveEvent = event as unknown as GameMoveEvent; // Casting the event to GameMoveEvent
+
+      const currentPlayer = gameMoveEvent.data.player === "X" ? "O" : "X";
+      setPlayer(currentPlayer);
+      setTurn(currentPlayer);
+
+      setBoard(
+        board.map((val, idx) => {
+          if (idx === gameMoveEvent.data.square && val === "") {
+            return gameMoveEvent.data.player;
+          }
+          return val;
+        })
+      );
     }
-  
-    channel.on((event) => {
-      if (event.type == "game-move" && event.user!.id != client.userID) {
-        const gameMoveEvent = event as unknown as GameMoveEvent; // Casting the event to GameMoveEvent
-  
-        const currentPlayer = gameMoveEvent.data.player === "X" ? "O" : "X";
-        setPlayer(currentPlayer);
-        setTurn(currentPlayer);
-  
-        setBoard(
-          board.map((val, idx) => {
-            if (idx === gameMoveEvent.data.square && val === "") {
-              return gameMoveEvent.data.player;
-            }
-            return val;
-          })
-        );
-      }
-    });
+  });
 
   return (
     <div className="board max-w-[250px] max-h-[250px] md:max-w-full md:max-h-full bg-yellow- gap-3 border-2 p-3 rounded-xl ">
