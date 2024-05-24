@@ -82,7 +82,7 @@ const App2 = ({ theme }: IProps) => {
           </div>
         </>
       ) : (
-        <div className="  h-screen place-content-center place-items-center grid ">
+        <div className="  h-screen place-content-center place-items-center w-screen grid ">
           <div className=" font-extrabold ">Welcome to Tic-Tac-Toe</div>
           <div>
             <Register setIsAuth={setIsAuth} theme={theme} />
