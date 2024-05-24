@@ -13,6 +13,7 @@ import JoinGame from "./components/JoinGame";
 import Navbar from "./components/navbar/Navbar";
 import { ThemeDataType } from "./assets/theme";
 import AppFooter from "./components/footer/AppFooter";
+import React from "react";
 
 interface IProps {
   theme: ThemeDataType;
@@ -81,7 +82,7 @@ const App2 = ({ theme }: IProps) => {
           </div>
         </>
       ) : (
-        <div className="  h-screen place-content-center place-items-center w-screen grid ">
+        <div className="  h-screen place-content-center place-items-center grid ">
           <div className=" font-extrabold ">Welcome to Tic-Tac-Toe</div>
           <div>
             <Register setIsAuth={setIsAuth} theme={theme} />

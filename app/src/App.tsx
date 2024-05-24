@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 import { themes } from "./assets/theme";
 
 import SCconnect from "./App2";
+import React from "react";
 
 interface SetThemeContextType {
   (value: string): void;
