@@ -13,7 +13,6 @@ import JoinGame from "./components/JoinGame";
 import Navbar from "./components/navbar/Navbar";
 import { ThemeDataType } from "./assets/theme";
 import AppFooter from "./components/footer/AppFooter";
-import React from "react";
 
 interface IProps {
   theme: ThemeDataType;

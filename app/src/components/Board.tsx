@@ -4,6 +4,7 @@ import Square from "./Square";
 import { Patterns } from "./WinningPattern";
 
 import { useChannelStateContext, useChatContext } from "stream-chat-react";
+import React from "react";
 
 export type ResultType = {
   winner: string;

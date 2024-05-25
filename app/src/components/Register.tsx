@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Cookies from "universal-cookie";
 import { ThemeDataType } from "../assets/theme";
 
-const link = "http://localhost:5005/register";
-// const link = "/register";
+// const link = "http://localhost:5005/register";
+const link = "/register";
 interface UserData {
   error: string;
   // firstname: string;

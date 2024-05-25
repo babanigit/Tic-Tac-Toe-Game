@@ -7,6 +7,7 @@ import { Window, MessageList, MessageInput } from "stream-chat-react";
 import Board from "./Board";
 import { ResultType } from "./Board";
 import { ThemeDataType } from "../assets/theme";
+import React from "react";
 
 export interface IChannel {
   stopWatching(): unknown;
