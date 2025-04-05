@@ -15,13 +15,23 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 }) : function(o, v) {
     o["default"] = v;
 });
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -62,7 +72,7 @@ app.use((0, morgan_1.default)("dev"));
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)());
-app.enable('trust proxy');
+app.enable("trust proxy");
 //routes
 app.post("/register", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -83,9 +93,7 @@ app.post("/register", (req, res, next) => __awaiter(void 0, void 0, void 0, func
         //     // cPasswd: hashedPasswd,
         // });
         const token = serverClient.createToken(userId);
-        res
-            .status(200)
-            .json({ token, userId, username, hashedPassword });
+        res.status(200).json({ token, userId, username, hashedPassword });
     }
     catch (error) {
         next(error);
@@ -119,17 +127,23 @@ app.post("/login", (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         next(error);
     }
 }));
+const bool = process.env.NODE_ENV || "production";
+let pathToIndex = path_1.default.resolve();
+if (bool !== "production") {
+    pathToIndex = path_1.default.dirname(path_1.default.resolve());
+    console.log("dirname2 ", pathToIndex);
+}
 // use the frontend app
-app.use(express_1.default.static(path_1.default.join(dirname, "/app/dist")));
-console.log(dirname);
-app.get('*', (req, res) => {
-    res.sendFile(path_1.default.join(dirname, '/app/dist/index.html'));
+app.use(express_1.default.static(path_1.default.join(pathToIndex, "/app/dist")));
+console.log(pathToIndex);
+app.get("*", (req, res) => {
+    res.sendFile(path_1.default.join(pathToIndex, "/app/dist/index.html"));
 });
 // get
 app.get("/", (req, res, next) => {
     try {
         res.status(200).json({
-            message: "server is live"
+            message: "server is live",
         });
     }
     catch (error) {
@@ -149,9 +163,7 @@ app.use((error, req, res, next) => {
         errorMessage = error.message;
     }
     console.error("[console log error] ", error);
-    res
-        .status(statusCode)
-        .json({
+    res.status(statusCode).json({
         success: false,
         error: errorMessage,
         statusCode,

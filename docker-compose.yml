@@ -1,0 +1,42 @@
+# docker-compose.yml
+# version: "3.8"
+
+services:
+  fullstack_backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: tic-tac-toe-fullStack-MERN
+    ports:
+      - "5005:5005"
+    env_file:
+      - ./.env # Load environment variables
+    environment:
+      MONGO_URI: "mongodb://mongo:27017/todo"
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+    depends_on:
+      - mongo
+      # - frontend
+
+  # frontend:
+  #   build: ./app
+  #   container_name: todo-frontend-bab
+  #   ports:
+  #     - "3000:80"
+  #   volumes:
+  #     - ./app:/app
+  #     - /app/node_modules
+
+  mongo:
+    image: mongo:latest
+    container_name: tic-tac-toe-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
