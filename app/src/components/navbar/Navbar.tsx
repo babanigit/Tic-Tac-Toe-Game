@@ -1,108 +1,83 @@
-// Navbar.tsx
-import "./Header.css"
-
+// import "./Header.css";
 import { useState, useContext } from "react";
 import { SetThemeContext } from "../../App";
 import { ThemeDataType } from "../../assets/theme";
 import { Channel } from "stream-chat";
-// import { Channel } from "stream-chat";
-// import { channel } from "diagnostics_channel";
+import React from "react";
 
-interface Iprops {
+interface IProps {
   theme: ThemeDataType;
-  // setTheme: (value: string) => void;
   logout: (value: unknown) => void;
   isAuth: boolean;
-  channel: null | Channel;
+  channel: Channel | null;
   setCall: (value: boolean) => void;
-  call:boolean
+  call: boolean;
 }
 
-const Navbar = ({ theme, logout, isAuth, channel, setCall,call }: Iprops) => {
+const Navbar = ({ theme, logout, isAuth, channel, setCall, call }: IProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currTheme, setCurrTheme] = useState(theme.name);
+  const setTheme = useContext(SetThemeContext);
 
-  const setT = useContext(SetThemeContext);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  function changeTheme() {
-    if (currTheme === "light") {
-      setT("dark");
-      // localStorage.setItem("theme", "dark");
-      setCurrTheme("dark");
-    } else {
-      setT("light");
-      // localStorage.setItem("theme", "light");
-      setCurrTheme("light");
-    }
-  }
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  const handleThemeToggle = () => {
+    const newTheme = currTheme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    setCurrTheme(newTheme);
   };
+
+  const navButtonStyle = {
+    borderColor: theme.text,
+  };
+
+  const renderButtons = () => (
+    <>
+      <button
+        style={navButtonStyle}
+        className="bg-opacity-50 border-2 p-3 rounded-lg px-5"
+        onClick={handleThemeToggle}
+      >
+        {currTheme === "light" ? "dark" : "light"}
+      </button>
+
+      {channel && (
+        <button
+          style={navButtonStyle}
+          onClick={() => setCall(!call)}
+          className="bg-opacity-50 border-2 p-3 rounded-lg px-5"
+        >
+          Leave Game
+        </button>
+      )}
+
+      {isAuth && (
+        <button
+          style={navButtonStyle}
+          onClick={logout}
+          className="bg-opacity-50 border-2 p-3 rounded-lg px-5"
+        >
+          Logout
+        </button>
+      )}
+    </>
+  );
 
   return (
     <nav
       style={{ color: theme.text, backgroundColor: theme.body }}
-      className=" p-4"
+      className="p-4"
     >
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center">
-          <div className="flex-shrink-0 font-extrabold ">Tic-Tac-Toe Game</div>
-          <div className="hidden gap-3 md:flex">
-            {/* <a
-              href="#"
-              className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-            >
-              Link 1
-            </a>
-            <a
-              href="#"
-              className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-            >
-              Link 2
-            </a>
-            <a
-              href="#"
-              className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-            >
-              Link 3
-            </a> */}
-            <button
-              style={{ borderColor: theme.text }}
-              className="  bg-opacity-50 border-2 p-3 rounded-lg px-5 "
-              onClick={changeTheme}
-            >
-              {theme.name === "light" ? "dark" : "light"}
-            </button>
+          <div className="font-extrabold text-xl">Tic-Tac-Toe Game</div>
 
-            {channel && (
-              <>
-                <button
-                  style={{ borderColor: theme.text }}
-                  onClick={() => {
-                    setCall(!call);
-                  }}
-                  className="   bg-opacity-50 border-2 p-3 rounded-lg px-5 "
-                >
-                  LeaveGame
-                </button>
-              </>
-            )}
+          <div className="hidden md:flex gap-3">{renderButtons()}</div>
 
-            {isAuth && (
-              <button
-                style={{ borderColor: theme.text }}
-                onClick={logout}
-                className="   bg-opacity-50 border-2 p-3 rounded-lg px-5 "
-              >
-                Logout
-              </button>
-            )}
-          </div>
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
-              className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex gap-2"
+              className="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex items-center"
             >
               {isMenuOpen ? (
                 <svg
@@ -135,66 +110,13 @@ const Navbar = ({ theme, logout, isAuth, channel, setCall,call }: Iprops) => {
                   />
                 </svg>
               )}
-
-              {/*  */}
-
             </button>
           </div>
         </div>
-        {/* Submenu */}
+
         {isMenuOpen && (
-          <div className="md:hidden">
-            <div className=" menu  mt-2 flex place-content-center gap-3">
-              {/* <a
-                href="#"
-                className="block  hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Submenu Link 1
-              </a>
-              <a
-                href="#"
-                className="block  hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Submenu Link 2
-              </a>
-              <a
-                href="#"
-                className="block  hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Submenu Link 3
-              </a> */}
-              <button
-                style={{ borderColor: theme.text }}
-                className="  bg-opacity-50 border-2 p-3 rounded-lg px-5 "
-                onClick={changeTheme}
-              >
-                {theme.name === "light" ? "dark" : "light"}
-              </button>
-
-              {channel && (
-                <>
-                  <button
-                    style={{ borderColor: theme.text }}
-                    onClick={() => {
-                      setCall(!call);
-                    }}
-                    className="   bg-opacity-50 border-2 p-3 rounded-lg px-5 "
-                  >
-                    LeaveGame
-                  </button>
-                </>
-              )}
-
-              {isAuth && (
-                <button
-                  style={{ borderColor: theme.text }}
-                  onClick={logout}
-                  className="   bg-opacity-50 border-2 p-3 rounded-lg px-5 "
-                >
-                  Logout
-                </button>
-              )}
-            </div>
+          <div className="md:hidden mt-2 flex justify-center gap-3">
+            {renderButtons()}
           </div>
         )}
       </div>

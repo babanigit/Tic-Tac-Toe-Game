@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 import { themes } from "./assets/theme";
 
 import SCconnect from "./App2";
+import React from "react";
 
 interface SetThemeContextType {
   (value: string): void;
@@ -11,7 +12,7 @@ interface SetThemeContextType {
 export const SetThemeContext = createContext<SetThemeContextType>(() => {});
 
 const App = () => {
-  const [themeState, setThemeState] = useState<string>("dark");
+  const [themeState, setThemeState] = useState<string>("light");
 
   return (
     <>
