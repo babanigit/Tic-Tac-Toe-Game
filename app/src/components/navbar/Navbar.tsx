@@ -65,8 +65,7 @@ const Navbar = ({ theme, logout, isAuth, channel, setCall, call }: IProps) => {
 
   return (
     <nav
-      style={{ color: theme.text, backgroundColor: theme.body }}
-      className="p-4"
+      className="p-4 bg-green-400"
     >
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center">

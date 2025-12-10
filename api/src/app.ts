@@ -117,15 +117,15 @@ let pathToIndex = path.resolve();
 
 if (bool !== "production") {
     pathToIndex = path.dirname(path.resolve());
-    console.log("dirname2 ", pathToIndex);
+    console.log("production dir ", pathToIndex);
 }
 
-// use the frontend app
-app.use(express.static(path.join(pathToIndex, "/app/dist")));
-console.log(pathToIndex);
-app.get("*", (req, res) => {
-    res.sendFile(path.join(pathToIndex, "/app/dist/index.html"));
-});
+// // use the frontend app
+// app.use(express.static(path.join(pathToIndex, "/app/dist")));
+// console.log(pathToIndex);
+// app.get("*", (req, res) => {
+//     res.sendFile(path.join(pathToIndex, "/app/dist/index.html"));
+// });
 
 // get
 app.get("/", (req: Request, res: Response, next: NextFunction) => {

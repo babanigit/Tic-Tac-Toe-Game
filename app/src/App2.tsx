@@ -65,7 +65,9 @@ const App2 = ({ theme }: IProps) => {
   };
 
   return (
-    <div style={{ backgroundColor: theme.body, color: theme.text }}>
+    <div
+    className="bg-red-400 h-screen"    
+    >
       <Navbar
         theme={theme}
         logout={logout}
@@ -74,6 +76,7 @@ const App2 = ({ theme }: IProps) => {
         call={call}
         setCall={setCall}
       />
+      
       {isAuth ? (
         <>
           <div className="   grid  ">
@@ -89,7 +92,7 @@ const App2 = ({ theme }: IProps) => {
           </div>
         </>
       ) : (
-        <div className="  h-screen place-content-center place-items-center  grid ">
+        <div className=" place-content-center place-items-center  grid ">
           {/* <div className=" font-extrabold ">Welcome to Tic-Tac-Toe</div> */}
           <div>
             <Register setIsAuth={setIsAuth} theme={theme} />
