@@ -22,11 +22,11 @@ interface IProps {
   setChannel: (value: null) => void;
   call: boolean;
   setCall: (value: boolean) => void;
-  theme:ThemeDataType;
+  theme: ThemeDataType;
 
 }
 
-const Game = ({ channel, setChannel, call, setCall,theme }: IProps) => {
+const Game = ({ channel, setChannel, call, setCall, theme }: IProps) => {
   useEffect(() => {
     async function hello() {
       await (typedChannel as IChannel).stopWatching();
@@ -66,7 +66,7 @@ const Game = ({ channel, setChannel, call, setCall,theme }: IProps) => {
 
   if (!playerJoined)
     return (
-      <div className="  h-screen place-content-center grid place-items-center">
+      <div className=" place-content-center grid place-items-center">
         Waiting for the Player to Join
       </div>
     );
@@ -77,10 +77,10 @@ const Game = ({ channel, setChannel, call, setCall,theme }: IProps) => {
   };
 
   return (
-    <div className=" w-full  h-screen  grid  grid-flow-row md:grid-flow-col place-content-center place-items-center gap-3">
+    <div className=" bg-opacity-40 p-2 rounded-md w-full grid  grid-flow-row md:grid-flow-col place-content-center place-items-center gap-3">
+      {/* board */}
       <div
-      style={{backgroundColor:theme.body, color:theme.text}}
-      className=" text-black">
+        className=" text-black">
         <Board result={result} setResult={setResult} />
       </div>
       {/* chat app */}
@@ -102,7 +102,7 @@ const Game = ({ channel, setChannel, call, setCall,theme }: IProps) => {
       </div>
 
       {/* exit game button */}
-    
+
 
       {/* <div className=" fixed bottom-0 m-5 bg-blue-300 p-3 rounded-md" >
         {result.state === "won" && <div> {result.winner} Won The Game</div>}

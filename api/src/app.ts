@@ -114,18 +114,23 @@ app.post("/login", async (req: Request, res: Response, next: NextFunction) => {
 const bool: string | undefined = process.env.NODE_ENV || "production";
 
 let pathToIndex = path.resolve();
+console.log("path1", pathToIndex);
+console.log("path2", path.dirname(path.resolve()));
 
 if (bool !== "production") {
+    console.log("development mode activated");
     pathToIndex = path.dirname(path.resolve());
-    console.log("production dir ", pathToIndex);
 }
 
-// // use the frontend app
-// app.use(express.static(path.join(pathToIndex, "/app/dist")));
-// console.log(pathToIndex);
-// app.get("*", (req, res) => {
-//     res.sendFile(path.join(pathToIndex, "/app/dist/index.html"));
-// });
+if (bool == "production") {
+    // use the frontend app
+    console.log("production mode activated");
+    app.use(express.static(path.join(pathToIndex, "/app/dist")));
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(pathToIndex, "/app/dist/index.html"));
+    });
+}
+
 
 // get
 app.get("/", (req: Request, res: Response, next: NextFunction) => {

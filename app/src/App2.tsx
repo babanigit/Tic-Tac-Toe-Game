@@ -65,9 +65,15 @@ const App2 = ({ theme }: IProps) => {
   };
 
   return (
-    <div
-    className="bg-red-400 h-screen"    
+    <div className="min-h-screen flex flex-col "
+      style={{
+        borderColor: theme.text,
+        backgroundColor: theme.body,
+        color: theme.text,
+      }}
     >
+
+      {/* Header */}
       <Navbar
         theme={theme}
         logout={logout}
@@ -76,32 +82,30 @@ const App2 = ({ theme }: IProps) => {
         call={call}
         setCall={setCall}
       />
-      
-      {isAuth ? (
-        <>
-          <div className="   grid  ">
-            <Chat client={client}>
-              <JoinGame
-                channel={channel}
-                setChannel={setChannel}
-                theme={theme}
-                call={call}
-                setCall={setCall}
-              />
-            </Chat>
-          </div>
-        </>
-      ) : (
-        <div className=" place-content-center place-items-center  grid ">
-          {/* <div className=" font-extrabold ">Welcome to Tic-Tac-Toe</div> */}
-          <div>
-            <Register setIsAuth={setIsAuth} theme={theme} />
-          </div>
-        </div>
-      )}
+
+      {/* Main Content */}
+      <main className="flex-grow">
+        {isAuth ? (
+          <Chat client={client}>
+            <JoinGame
+              channel={channel}
+              setChannel={setChannel}
+              theme={theme}
+              call={call}
+              setCall={setCall}
+            />
+          </Chat>
+        ) : (
+          <Register setIsAuth={setIsAuth} theme={theme} />
+        )}
+      </main>
+
+      {/* Footer */}
       <AppFooter />
+
     </div>
   );
+
 };
 
 export default App2;

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Cookies from "universal-cookie";
 import { ThemeDataType } from "../assets/theme";
 
-const link = "http://localhost:5005/register";
-// const link = "/register";
+// const link = "http://localhost:5005/register";
+const link = "/register";
 
 interface UserData {
   error: string;
@@ -57,7 +57,7 @@ const Register = ({ setIsAuth, theme }: Iprops) => {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4 py-10 sm:px-6 lg:px-8"
+      className="flex items-center justify-center px-4 py-10 sm:px-6 lg:px-8"
     >
       <div
         className="w-full max-w-md space-y-8 border-2 rounded-2xl shadow-xl p-8 transition-all duration-300 ease-in-out"
@@ -84,7 +84,7 @@ const Register = ({ setIsAuth, theme }: Iprops) => {
               onChange={handleChange}
               className="appearance-none w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
               style={{
-                backgroundColor: theme.body,
+                background: theme.body,
                 color: theme.text,
                 borderColor: theme.text,
               }}
@@ -99,7 +99,7 @@ const Register = ({ setIsAuth, theme }: Iprops) => {
               onChange={handleChange}
               className="appearance-none w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
               style={{
-                backgroundColor: theme.body,
+                background: theme.body,
                 color: theme.text,
                 borderColor: theme.text,
               }}

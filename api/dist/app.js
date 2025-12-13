@@ -119,16 +119,20 @@ app.post("/login", (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 }));
 const bool = process.env.NODE_ENV || "production";
 let pathToIndex = path_1.default.resolve();
+console.log("path1", pathToIndex);
+console.log("path2", path_1.default.dirname(path_1.default.resolve()));
 if (bool !== "production") {
+    console.log("development mode activated");
     pathToIndex = path_1.default.dirname(path_1.default.resolve());
-    console.log("production dir ", pathToIndex);
 }
-// // use the frontend app
-// app.use(express.static(path.join(pathToIndex, "/app/dist")));
-// console.log(pathToIndex);
-// app.get("*", (req, res) => {
-//     res.sendFile(path.join(pathToIndex, "/app/dist/index.html"));
-// });
+if (bool == "production") {
+    // use the frontend app
+    console.log("production mode activated");
+    app.use(express_1.default.static(path_1.default.join(pathToIndex, "/app/dist")));
+    app.get("*", (req, res) => {
+        res.sendFile(path_1.default.join(pathToIndex, "/app/dist/index.html"));
+    });
+}
 // get
 app.get("/", (req, res, next) => {
     try {

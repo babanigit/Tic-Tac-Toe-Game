@@ -56,48 +56,56 @@ const JoinGame = ({ channel, setChannel, theme, call, setCall }: IProps) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-10 sm:px-6 lg:px-8">
-      {channel ? (
-        <Channel channel={channel} Input={CustomInput}>
-          <Game
-            channel={channel}
-            setChannel={setChannel}
-            call={call}
-            setCall={setCall}
-            theme={theme}
-          />
-        </Channel>
-      ) : (
-        <div
-          className="grid gap-4 place-content-center place-items-center text-center"
-          style={{
-            background: theme.body,
-            color: theme.text,
-          }}
-        >
-          <h2 className="text-xl font-semibold">Start a New Game</h2>
-          <input
-            className="appearance-none w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-            style={{
-              background: theme.body,
-              color: theme.text,
-              borderColor: theme.text,
-            }}
-            type="text"
-            placeholder="Enter rival's username"
-            value={rivalUsername}
-            onChange={(e) => setRivalUsername(e.target.value)}
-            onKeyDown={handleKeyPress}
-          />
-          <button
-            onClick={createChannel}
-            className="group w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition"
-            style={{ borderColor: theme.text }}
+    <div className=" flex items-center justify-center px-4 py-10 sm:px-6 lg:px-8">
+      <div
+        style={{
+          borderColor: theme.text,
+          backgroundColor: theme.body,
+          color: theme.text,
+        }}
+      >
+
+        {channel ? (
+          <Channel channel={channel} Input={CustomInput}>
+            <Game
+              channel={channel}
+              setChannel={setChannel}
+              call={call}
+              setCall={setCall}
+              theme={theme}
+            />
+          </Channel>
+        ) : (
+          <div
+            className="w-full max-w-md space-y-8 border-2 rounded-2xl shadow-xl p-8 transition-all duration-300 ease-in-out"
+
           >
-            Start Game
-          </button>
-        </div>
-      )}
+            <h2 className="text-xl font-semibold">Start a New Game</h2>
+            <input
+              className="appearance-none w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+              style={{
+                background: theme.body,
+                color: theme.text,
+                borderColor: theme.text,
+              }}
+              type="text"
+              placeholder="Enter rival's username"
+              value={rivalUsername}
+              onChange={(e) => setRivalUsername(e.target.value)}
+              onKeyDown={handleKeyPress}
+            />
+            <button
+              onClick={createChannel}
+              className="group w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition"
+              style={{ borderColor: theme.text }}
+            >
+              Start Game
+            </button>
+          </div>
+        )}
+
+      </div>
+
     </div>
   );
 };

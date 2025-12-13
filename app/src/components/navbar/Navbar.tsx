@@ -65,7 +65,7 @@ const Navbar = ({ theme, logout, isAuth, channel, setCall, call }: IProps) => {
 
   return (
     <nav
-      className="p-4 bg-green-400"
+      className=" pt-2 pr-2 pl-4 bg-opacity-40"
     >
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center">
