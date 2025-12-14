@@ -117,13 +117,12 @@ let pathToIndex = path.resolve();
 console.log("path1", pathToIndex);
 console.log("path2", path.dirname(path.resolve()));
 
-if (bool !== "production") {
+if (bool == "development") {
     console.log("development mode activated");
     pathToIndex = path.dirname(path.resolve());
 }
 
-if (bool == "production") {
-    // use the frontend app
+if (bool != "development") {
     console.log("production mode activated");
     app.use(express.static(path.join(pathToIndex, "/app/dist")));
     app.get("*", (req, res) => {

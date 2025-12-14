@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import Cookies from "universal-cookie";
 import { ThemeDataType } from "../assets/theme";
 
-// const link = "http://localhost:5005/register";
-const link = "/register";
 
 interface UserData {
   error: string;
@@ -19,6 +17,16 @@ interface Iprops {
 }
 
 const Register = ({ setIsAuth, theme }: Iprops) => {
+
+  // const link = "http://localhost:5005/register";
+  let link = "/register";
+
+  const ENVIRONMENT = import.meta.env.VITE_STREAM_ENV!;
+  if (ENVIRONMENT == "development") {
+    link = "http://localhost:5005/register";
+  }
+  console.log("env link : ", link);  
+
   const cookies = new Cookies();
   const [formData, setFormData] = useState({});
   const [errorData, setErrorData] = useState<UserData>();

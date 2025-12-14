@@ -15,12 +15,14 @@ import { ThemeDataType } from "./assets/theme";
 import AppFooter from "./components/footer/AppFooter";
 import React from "react";
 
+
 interface IProps {
   theme: ThemeDataType;
 }
-
+  
 const App2 = ({ theme }: IProps) => {
-  const apiKey = "ab9gyx8fnz3j" || process.env.SC_KEY!;
+  const apiKey = import.meta.env.VITE_STREAM_API_KEY!;
+
   const cookies = new Cookies();
   const token = cookies.get("token");
 
