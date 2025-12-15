@@ -8,6 +8,8 @@ import Board from "./Board";
 import { ResultType } from "./Board";
 import { ThemeDataType } from "../assets/theme";
 import React from "react";
+import CustomMessageList from "./window/CustomMessageList";
+import CustomMessageInput from "./window/CustomMessageInput";
 
 export interface IChannel {
   stopWatching(): unknown;
@@ -85,7 +87,7 @@ const Game = ({ channel, setChannel, call, setCall, theme }: IProps) => {
       </div>
       {/* chat app */}
       <div className=" text-black">
-        <Window>
+        {/* <Window>
           <div className=" p-3 ">
             <MessageList
               disableDateSeparator
@@ -98,7 +100,13 @@ const Game = ({ channel, setChannel, call, setCall, theme }: IProps) => {
           <div className=" flex place-content-center place-items-center">
             <MessageInput noFiles />
           </div>
+        </Window> */}
+
+        <Window>
+          <CustomMessageList />
+          <CustomMessageInput />
         </Window>
+
       </div>
 
       {/* exit game button */}
